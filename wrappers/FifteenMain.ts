@@ -26,4 +26,10 @@ export class FifteenMain implements Contract {
             body: beginCell().endCell(),
         });
     }
+
+    async getBalance(provider: ContractProvider) {
+        const result = await provider.get('current_balance', []);
+        return result.stack.readNumber();
+    }
+
 }

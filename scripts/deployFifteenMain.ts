@@ -5,7 +5,7 @@ import { compile, NetworkProvider } from '@ton/blueprint';
 export async function run(provider: NetworkProvider) {
     const fifteenMain = provider.open(FifteenMain.createFromConfig({}, await compile('FifteenMain')));
 
-    await fifteenMain.sendDeploy(provider.sender(), toNano('0.05'));
+    await fifteenMain.sendDeploy(provider.sender(), toNano('0.5'));
 
     await provider.waitForDeploy(fifteenMain.address);
 
