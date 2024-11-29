@@ -1,5 +1,7 @@
 # fifteen-tma
 
+Fifteen game world cup Telegram TMA
+
 ## Project structure
 
 -   `contracts` - source code of all the smart contracts of the project and their dependencies.
