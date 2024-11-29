@@ -21,6 +21,7 @@ describe('FifteenMain', () => {
         fifteenMain = blockchain.openContract(FifteenMain.createFromConfig({}, code));
 
         deployer = await blockchain.treasury('deployer');
+        console.log('deployer.getBalance:',fromNano(await deployer.getBalance())+ " TON");
 
         const deployResult = await fifteenMain.sendDeploy(deployer.getSender(), toNano('0.5'));
 
@@ -39,6 +40,6 @@ describe('FifteenMain', () => {
     
     it('should return balance', async () => {
         const currentBalance = await fifteenMain.getBalance();
-        console.log("current balance:",fromNano(currentBalance));
+        console.log("current balance:",fromNano(currentBalance)+ " TON");
     });
 });

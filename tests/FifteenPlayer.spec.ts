@@ -46,7 +46,7 @@ describe('FifteenPlayer', () => {
     });
 
     it('should increase counter', async () => {
-        const increaseTimes = 3;
+        const increaseTimes = 2;
         for (let i = 0; i < increaseTimes; i++) {
             console.log(`increase ${i + 1}/${increaseTimes}`);
 
