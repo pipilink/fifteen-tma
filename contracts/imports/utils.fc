@@ -1,0 +1,6 @@
+#include "stdlib.fc";
+#include "constants.fc";
+
+builder to_builder(slice s) inline {
+    return begin_cell().store_slice(s);
+}

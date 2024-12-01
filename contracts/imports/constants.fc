@@ -1,0 +1,6 @@
+
+const int err::invalid_op = 107;
+
+const int op::deposit_coins = 0x7a04b41b;
+const int op::withdraw = 0x4b03bfaf;
+const int op::set_bid = 0x5ec63436;
