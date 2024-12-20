@@ -3,14 +3,14 @@
 global slice owner;         ;; Owner address
 global int profit;          ;; 0 - owner profit         
 global int interest;        ;; 10 - current interest in %
-global int deposit;         ;; 0   get contract balance - profit
+global int deposit;         ;; 0   get (contract balance - profit)
 global int fund;            ;; 55  TON => 55  | 27.5 | 13.75 | 6.875  
 global int bid;             ;; 0.5 TON => 0.5 | 0.25 | 0.125 | 0.0625
 global int bid_rate;        ;; 1 => 1/1, 1/2, 1/4, 1/8
-global int stopped?;        ;; game over? when fund < 6.875 TON
+global int stopped?;        ;; game over? will by =1 when fund < 6.875 TON, =0 else
 global int warming?;        ;; warming mode?
 global int last_time;       ;; minimum time result for get prize
-global cell player_codes;   ;; player contract
+;; global cell player_codes;   ;; player contract 
 
 ;; top_board [1..10] sort struct -> 
 
@@ -25,13 +25,13 @@ global cell player_codes;   ;; player contract
         .store_int(bid_rate,8)
         .store_int(stopped?, 1)
         .store_int(warming?, 1)        
-        .store_int(last_time, 16)        
-        .store_ref(player_codes)
+        .store_int(last_time, 32)        
+;;        .store_ref(player_codes)
     .end_cell()
     .set_data();
 }
 
-() load_data() impure inline_ref {
+() load_data() impure {
     slice ds = get_data().begin_parse();
         owner = ds~load_msg_addr();
         profit = ds~load_coins();
@@ -42,7 +42,8 @@ global cell player_codes;   ;; player contract
         bid_rate = ds~load_int(8);
         stopped? = ds~load_int(1);
         warming? = ds~load_int(1);
-        last_time = ds~load_int(16);
+        last_time = ds~load_int(32);
+  ;;      player_codes = ds~load_ref();
     ds.end_parse();
 }
 
@@ -98,6 +99,8 @@ global cell player_codes;   ;; player contract
 
 
 () recv_internal(cell in_msg_full, slice s) impure {
+
+
     slice cs = in_msg_full.begin_parse();
     int flags = cs~load_uint(4);
     slice src = cs~load_msg_addr();
@@ -107,9 +110,46 @@ global cell player_codes;   ;; player contract
     save_data();
 }
 
+;;
+;; get methods
+;;
 
 int current_balance() method_id {
   [int balance, cell data] = get_balance();
 
     return balance;
 }
+
+slice get_owner() method_id {
+    load_data();
+    return owner;
+}
+
+var get_state() method_id {
+    load_data();
+    return (
+         owner
+        ,profit
+        ,interest
+        ,deposit
+        ,fund
+        ,bid
+        ,bid_rate
+        ,stopped?
+        ,warming?
+        ,last_time
+    );
+}
+
+
+
+{-
+slice calculate_user_jetton_wallet_address(
+        slice owner_address, ;; user address
+        slice jetton_master_address,  ;; parent address
+        cell jetton_wallet_code) inline {
+  return calculate_jetton_wallet_address(
+    calculate_jetton_wallet_state_init(owner_address, jetton_master_address, jetton_wallet_code)
+  );
+}
+-}

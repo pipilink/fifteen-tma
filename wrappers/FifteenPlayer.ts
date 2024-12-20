@@ -6,7 +6,10 @@ export type FifteenPlayerConfig = {
 };
 
 export function fifteenPlayerConfigToCell(config: FifteenPlayerConfig): Cell {
-    return beginCell().storeUint(config.id, 32).storeUint(config.counter, 32).endCell();
+    return beginCell()
+        .storeUint(config.id, 32)
+        .storeUint(config.counter, 32)
+        .endCell();
 }
 
 export const Opcodes = {
