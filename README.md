@@ -26,3 +26,8 @@ Fifteen game world cup Telegram TMA
 ### Add a new contract
 
 `npx blueprint create ContractName` or `yarn blueprint create ContractName`
+
+
+### Run Any ts scripts example:
+
+`npx ts-node .\project\research.ts`
